@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ポモドーロタイマー</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1 class="title">ポモドーロタイマー</h1>
+
+      <section class="timer-card">
+        <p id="status-label" class="status">作業中</p>
+        <div id="time-display" class="time">25:00</div>
+        <div class="controls">
+          <button id="start-btn" class="btn primary">開始</button>
+          <button id="reset-btn" class="btn">リセット</button>
+        </div>
+      </section>
+
+      <footer class="footnote">
+        Step1: ローカルで開始/リセットが動く最小実装
+      </footer>
+    </main>
+
+    <script src="/static/js/timer.js"></script>
+    <script>
+      // 既定は25分（サーバ設定があればその値を使う設計に拡張可）
+      const DEFAULT_SECONDS = 25 * 60;
+      const timer = new window.Timer(DEFAULT_SECONDS, (left) => {
+        document.getElementById('time-display').textContent = window.formatAsMMSS(left);
+      }, () => {
+        document.getElementById('status-label').textContent = '完了!';
+      });
+
+      // 初期化（表示更新）
+      document.getElementById('time-display').textContent = window.formatAsMMSS(DEFAULT_SECONDS);
+
+      document.getElementById('start-btn').addEventListener('click', () => timer.start());
+      document.getElementById('reset-btn').addEventListener('click', () => timer.reset());
+    </script>
+  </body>
+</html>
